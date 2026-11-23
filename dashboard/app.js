@@ -185,21 +185,27 @@
     renderDetail();
   }
 
+  // Fill the controls from the state. The option lists are built once; the
+  // values are re-synced on every call, so a hash change (a deep link, or a
+  // navigation that only swaps the hash) never leaves stale controls behind
+  // a freshly filtered board.
   function fillControls() {
-    var cats = {};
-    var chains = {};
-    D.rows.forEach(function (r) {
-      if (r.c) cats[r.c] = true;
-      r.h.forEach(function (h) { chains[h] = true; });
-    });
-    Object.keys(cats).sort().forEach(function (c) {
-      var o = document.createElement('option');
-      o.value = c; o.textContent = c; catEl.appendChild(o);
-    });
-    Object.keys(chains).sort().forEach(function (c) {
-      var o = document.createElement('option');
-      o.value = c; o.textContent = c; chainEl.appendChild(o);
-    });
+    if (catEl.options.length <= 1) {
+      var cats = {};
+      var chains = {};
+      D.rows.forEach(function (r) {
+        if (r.c) cats[r.c] = true;
+        r.h.forEach(function (h) { chains[h] = true; });
+      });
+      Object.keys(cats).sort().forEach(function (c) {
+        var o = document.createElement('option');
+        o.value = c; o.textContent = c; catEl.appendChild(o);
+      });
+      Object.keys(chains).sort().forEach(function (c) {
+        var o = document.createElement('option');
+        o.value = c; o.textContent = c; chainEl.appendChild(o);
+      });
+    }
     qEl.value = state.q; catEl.value = state.cat; chainEl.value = state.chain;
     sortEl.value = state.sort; hotEl.checked = state.hot;
   }
@@ -241,5 +247,5 @@
     writeHash(state); render();
     if (state.detail) detailEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
-  window.addEventListener('hashchange', function () { state = readHash(); render(); });
+  window.addEventListener('hashchange', function () { state = readHash(); fillControls(); render(); });
 })();
