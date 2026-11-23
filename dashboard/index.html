@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Breakout Radar — pre-token protocols ranked by volume breakout</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>Breakout Radar</h1>
+    <p class="sub">Pre-token protocols, ranked by volume breaking out — not by size alone.</p>
+  </div>
+  <div class="stats" id="stats"></div>
+</header>
+<nav class="tabs" id="tabs">
+  <button data-view="board" class="on">Board</button>
+  <button data-view="live">Live tokens</button>
+</nav>
+<section class="controls" id="controls">
+  <input id="q" type="search" placeholder="Search name or slug…" aria-label="Search protocols">
+  <select id="cat" aria-label="Filter by category"><option value="">All categories</option></select>
+  <select id="chain" aria-label="Filter by chain"><option value="">All chains</option></select>
+  <select id="sort" aria-label="Sort the board">
+    <option value="implied">Sort: implied value</option>
+    <option value="breakout">Sort: breakout</option>
+    <option value="tvl">Sort: TVL</option>
+    <option value="growth">Sort: 7-day change</option>
+    <option value="age">Sort: oldest first</option>
+  </select>
+  <label class="hot-only"><input id="hot" type="checkbox"> Breakouts only</label>
+</section>
+<p class="count" id="count"></p>
+<main id="app" aria-busy="true"></main>
+<aside id="detail" class="detail" hidden></aside>
+<footer class="method">
+  <h2>How the radar prices a launch</h2>
+  <p id="method"></p>
+  <p class="note">A protocol on this board <strong>records no token</strong> in the snapshot — that is DefiLlama's
+  record, never proof it has none. Implied value is this radar's own claim from the snapshot's figures,
+  not a prediction that a token is issued, or when, or at what price. Farm plans are suggestions, not
+  financial advice: never pay to claim, and never farm with money you cannot afford to lose.</p>
+</footer>
+<script src="../data.js"></script>
+<script src="farm.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
